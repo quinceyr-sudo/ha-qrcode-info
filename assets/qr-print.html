@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hotel Americano — Room QR Codes</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #f5f3f0;
+      padding: 2rem;
+      color: #2a2624;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: normal;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    .floor-group {
+      margin-bottom: 2.5rem;
+    }
+
+    .floor-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #999;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .qr-card {
+      background: #fff;
+      border: 1px solid #e0dbd5;
+      border-radius: 4px;
+      padding: 0.85rem 0.85rem 0.65rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      width: 130px;
+    }
+
+    .qr-canvas {
+      width: 100px !important;
+      height: 100px !important;
+    }
+
+    .qr-canvas canvas,
+    .qr-canvas img {
+      width: 100px !important;
+      height: 100px !important;
+    }
+
+    .room-num {
+      font-size: 1rem;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      color: #2a2624;
+    }
+
+    .room-type {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #B7652B;
+    }
+
+    .room-url {
+      font-size: 0.5rem;
+      color: #bbb;
+      text-align: center;
+      word-break: break-all;
+    }
+
+    /* Print styles */
+    @media print {
+      body { background: #fff; padding: 0.5rem; }
+      .qr-card { break-inside: avoid; border: 1px solid #ccc; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <p class="no-print" style="text-align:center; margin-bottom:1.5rem; font-size:0.8rem; color:#999; font-family:sans-serif;">
+    Ctrl+P / Cmd+P to print &nbsp;·&nbsp; Or save as PDF
+  </p>
+
+  <h1>Hotel Americano — Room QR Codes</h1>
+
+  <div id="output"></div>
+
+  <script>
+    const BASE_URL = "https://info.hotelamericanosaipan.com?room=";
+
+    const ROOMS = {
+      1: [
+        { num: 101, type: "Deluxe Twin" },
+        { num: 102, type: "Deluxe Twin" },
+      ],
+      2: [
+        { num: 201, type: "Deluxe Double" },
+        { num: 202, type: "Deluxe Double" },
+        { num: 203, type: "Deluxe Twin" },
+        { num: 204, type: "Deluxe Twin" },
+        { num: 205, type: "Deluxe Twin" },
+        { num: 206, type: "Deluxe Twin" },
+        { num: 207, type: "Deluxe Twin" },
+        { num: 208, type: "Deluxe Twin" },
+        { num: 209, type: "Deluxe Twin" },
+        { num: 210, type: "Deluxe Twin" },
+        { num: 211, type: "Deluxe Double" },
+        { num: 212, type: "Deluxe Twin" },
+      ],
+      3: [
+        { num: 301, type: "Deluxe Double" },
+        { num: 302, type: "Deluxe Twin" },
+        { num: 303, type: "Deluxe Twin" },
+        { num: 304, type: "Deluxe Twin" },
+        { num: 305, type: "Deluxe Twin" },
+        { num: 306, type: "Deluxe Twin" },
+        { num: 307, type: "Deluxe Twin" },
+        { num: 308, type: "Deluxe Twin" },
+        { num: 309, type: "Deluxe Twin" },
+        { num: 311, type: "Deluxe Double" },
+        { num: 312, type: "Deluxe Twin" },
+      ],
+    };
+
+    const output = document.getElementById("output");
+
+    Object.entries(ROOMS).forEach(([floor, rooms]) => {
+      const group = document.createElement("div");
+      group.className = "floor-group";
+
+      const label = document.createElement("div");
+      label.className = "floor-label";
+      label.textContent = `Floor ${floor}`;
+      group.appendChild(label);
+
+      const grid = document.createElement("div");
+      grid.className = "grid";
+
+      rooms.forEach(({ num, type }) => {
+        const card = document.createElement("div");
+        card.className = "qr-card";
+
+        const qrDiv = document.createElement("div");
+        qrDiv.className = "qr-canvas";
+        qrDiv.id = `qr-${num}`;
+
+        const roomNum = document.createElement("div");
+        roomNum.className = "room-num";
+        roomNum.textContent = `Room ${num}`;
+
+        const roomType = document.createElement("div");
+        roomType.className = "room-type";
+        roomType.textContent = type;
+
+        const url = document.createElement("div");
+        url.className = "room-url";
+        url.textContent = `${BASE_URL}${num}`;
+
+        card.appendChild(qrDiv);
+        card.appendChild(roomNum);
+        card.appendChild(roomType);
+        card.appendChild(url);
+        grid.appendChild(card);
+
+        // Generate QR after appending to DOM
+        setTimeout(() => {
+          new QRCode(document.getElementById(`qr-${num}`), {
+            text: `${BASE_URL}${num}`,
+            width: 100,
+            height: 100,
+            colorDark: "#2a2624",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.M,
+          });
+        }, 0);
+      });
+
+      group.appendChild(grid);
+      output.appendChild(group);
+    });
+  </script>
+
+</body>
+</html>

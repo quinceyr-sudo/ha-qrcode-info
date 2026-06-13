@@ -45,6 +45,7 @@ ha-qrcode-info/
     ├── Hotel Americano LOGO 2.png           ← original full logo (unused in UI)
     ├── Hotel Americano HA logowider.png     ← main header logo (w-56)
     ├── Hotel Americano HA Only Transparent Gold.png  ← footer monogram (h-40)
+    ├── qr-print.html                        ← printable QR code sheet for in-room cards
     ├── hero.jpg                             ← drone exterior (used for hero section)
     ├── lobby.avif
     ├── sundeck.avif                         ← do NOT include in random photo pool
