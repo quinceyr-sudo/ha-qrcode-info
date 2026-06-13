@@ -1,0 +1,14 @@
+# Original/uncompressed source images — use compressed WebP/AVIF in assets/ instead
+assets/majesty photos/
+assets/sundeck-originals/
+
+# Brainstorming session files
+.superpowers/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+*.swp
