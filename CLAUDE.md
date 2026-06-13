@@ -220,6 +220,14 @@ Still needed: CHC Hospital number, Taxi direct number.
 
 ---
 
+## Git Notes
+- `.gitignore` excludes `assets/majesty photos/` (uncompressed source JPGs), `.superpowers/`, and OS/editor noise
+- **Never commit uncompressed originals** — they bloated the repo to 173MB once; history had to be rewritten with `git filter-repo` to fix it
+- Always compress to WebP/AVIF before adding to `assets/` (see compression command above)
+- Cloudflare Pages deploys automatically on push to `main`; no manual deploy needed
+
+---
+
 ## Out of Scope (for now)
 - Live Beds24 data (no dynamic guest name/dates)
 - Admin panel for updating content
