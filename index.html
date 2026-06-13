@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Hotel Americano — Guest Information</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=EB+Garamond:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary-container": "#c59765",
+            "tertiary": "#3d627d",
+            "primary": "#7c572b",
+            "background": "#fdf9f3",
+            "charcoal-text": "#3B3B3C",
+            "outline-variant": "#d4c4b6",
+            "surface": "#fdf9f3",
+            "surface-container-low": "#f7f3ed",
+            "surface-container": "#f1ede7",
+            "surface-container-high": "#ebe8e2",
+            "surface-variant": "#e6e2dc",
+            "deep-onyx": "#0F0802",
+            "on-background": "#1c1c18",
+            "secondary": "#944a10",
+            "on-primary-container": "#4f3006",
+            "on-primary-fixed": "#2b1700",
+            "surface-bright": "#fdf9f3",
+            "on-surface": "#1c1c18",
+            "surface-container-highest": "#e6e2dc",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed-variant": "#623f15",
+            "on-surface-variant": "#50453b",
+            "pure-gold": "#C59441",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#31302d",
+            "outline": "#827569",
+            "surface-dim": "#ddd9d4",
+            "primary-fixed": "#ffddbb",
+            "primary-fixed-dim": "#efbd88",
+            "surface-tint": "#7c572b"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "margin-mobile": "20px",
+          },
+          fontFamily: {
+            "body-md": ["Jost"],
+            "label-sm": ["Jost"],
+            "display-md": ["EB Garamond"],
+            "headline-md": ["EB Garamond"],
+            "headline-lg": ["EB Garamond"],
+          },
+          fontSize: {
+            "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+            "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+            "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "0.04em", "fontWeight": "400"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "0.05em", "fontWeight": "300"}],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen">
+
+<div class="max-w-[480px] mx-auto min-h-screen flex flex-col bg-[#F7F3ED] relative shadow-2xl overflow-x-hidden">
+
+  <!-- Sticky Gold Shimmer Bar -->
+  <div class="h-1 w-full shimmer-bar sticky top-0 z-[60]" aria-hidden="true"></div>
+
+  <!-- Hero Image -->
+  <div class="relative w-full h-64 overflow-hidden">
+    <img src="assets/hero.jpg" alt="Hotel Americano exterior" class="w-full h-full object-cover hero-img">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-[#F7F3ED]" aria-hidden="true"></div>
+  </div>
+
+  <!-- Header (on cream, below hero) -->
+  <header class="pt-0 pb-8 px-margin-mobile flex flex-col items-center gap-4 -mt-10 relative z-10 header-animate" id="home">
+    <img alt="Hotel Americano" class="h-auto w-56 drop-shadow-lg logo-animate" src="assets/Hotel Americano HA logowider.png">
+    <div class="text-center title-animate">
+      <h1 class="serif-title font-light uppercase tracking-[0.2em] text-headline-md leading-snug">
+        Welcome to Hotel Americano
+      </h1>
+      <div id="room-banner" class="hidden mt-4">
+        <div class="inline-flex items-center px-4 py-1.5 border border-pure-gold/40 rounded-full bg-white/60 backdrop-blur-sm">
+          <span id="room-banner-text" class="font-label-sm text-label-sm text-primary tracking-widest uppercase"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow px-margin-mobile pb-12">
+
+    <!-- Photo Strip — populated randomly by JS -->
+    <div id="photo-strip" class="flex gap-2 mb-6 -mx-margin-mobile px-margin-mobile overflow-x-auto photo-strip no-scrollbar scroll-fade-in" role="list" aria-label="Hotel photos"></div>
+
+    <div class="gold-divider mt-2"></div>
+
+    <!-- 1. House Rules -->
+    <section class="mb-10 scroll-fade-in" id="rules" aria-labelledby="rules-heading">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-8 h-[1px] bg-pure-gold" aria-hidden="true"></div>
+        <h2 class="font-label-sm text-label-sm text-primary tracking-wide uppercase" id="rules-heading">House Rules</h2>
+      </div>
+      <ul class="rules-list space-y-4"></ul>
+    </section>
+
+    <div class="gold-divider"></div>
+
+    <!-- 2. WiFi -->
+    <section class="mb-10 scroll-fade-in" id="wifi" aria-labelledby="wifi-heading">
+      <div class="bg-surface-container-low rounded-lg p-6 gold-border-top shadow-soft">
+        <div class="flex justify-between items-start mb-6">
+          <div>
+            <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-1" id="wifi-heading">WiFi</p>
+            <p class="font-headline-md text-headline-md text-charcoal-text">Hotel Americano WIFI</p>
+          </div>
+          <span class="material-symbols-outlined text-pure-gold wifi-pulse" aria-hidden="true">wifi</span>
+        </div>
+        <div class="mb-6">
+          <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-1">Password</p>
+          <p class="font-headline-md text-headline-md text-charcoal-text" id="wifi-password">hotel8888</p>
+        </div>
+        <button type="button" id="copy-wifi"
+          class="w-full bg-white border border-pure-gold/20 py-3 rounded-md font-label-sm text-label-sm text-primary tracking-widest uppercase hover:bg-surface-container transition-colors active:scale-95 duration-200"
+          aria-label="Copy WiFi password">
+          Copy Password
+        </button>
+        <span class="sr-only" id="copy-status" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <div class="gold-divider"></div>
+
+    <!-- 3. Important Numbers -->
+    <section class="mb-10 scroll-fade-in" id="numbers" aria-labelledby="numbers-heading">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-8 h-[1px] bg-pure-gold" aria-hidden="true"></div>
+        <h2 class="font-label-sm text-label-sm text-primary tracking-wide uppercase" id="numbers-heading">Important Numbers</h2>
+      </div>
+      <div class="space-y-3" id="numbers-list" role="list"></div>
+    </section>
+
+    <div class="gold-divider"></div>
+
+    <!-- 4. Promo — Majesty Chinese Restaurant -->
+    <section class="mb-10 scroll-fade-in" aria-labelledby="promo-heading">
+      <div class="relative overflow-hidden rounded-lg bg-gradient-to-b from-[#2B1700] to-deep-onyx gold-border-top shadow-xl">
+        <div class="h-52 relative overflow-hidden">
+          <img id="majesty-hero" alt="Majesty Chinese Restaurant"
+            class="w-full h-full object-cover opacity-75 promo-img" src="">
+          <div class="absolute inset-0 bg-gradient-to-t from-deep-onyx via-deep-onyx/20 to-transparent" aria-hidden="true"></div>
+        </div>
+        <div class="px-8 pt-6 pb-8">
+          <img src="assets/majesty/logo.webp" alt="Majesty Chinese Restaurant"
+            class="h-[7.5rem] w-auto mb-5 opacity-95">
+          <p class="font-label-sm text-label-sm text-pure-gold tracking-[0.2em] uppercase mb-3">Sister Restaurant · TDI Saipan</p>
+          <h3 class="serif-title font-light text-headline-lg text-white mb-4 leading-tight" id="promo-heading">Saipan's Finest<br>Chinese Dining</h3>
+          <p class="font-body-md text-body-md text-surface-variant/75 leading-relaxed">
+            Authentic Cantonese cuisine, dim sum, and classic Chinese dishes crafted with care — right here in the heart of Saipan.
+          </p>
+          <div class="mt-5 pt-5 border-t border-pure-gold/10 flex flex-col gap-2.5">
+            <a href="tel:+16702332088"
+               class="flex items-center gap-3 text-pure-gold/80 hover:text-pure-gold transition-colors">
+              <span class="text-sm">📞</span>
+              <span class="font-label-sm text-label-sm tracking-widest">670-233-2088 · Reservations</span>
+            </a>
+            <a href="https://majesty-restaurant.com/" target="_blank" rel="noopener noreferrer"
+               class="flex items-center gap-3 text-pure-gold/80 hover:text-pure-gold transition-colors">
+              <span class="text-sm">🌐</span>
+              <span class="font-label-sm text-label-sm tracking-widest">majesty-restaurant.com</span>
+            </a>
+          </div>
+        </div>
+        <!-- Majesty photo strip -->
+        <div id="majesty-strip" class="flex gap-1.5 pb-5 px-5 overflow-x-auto no-scrollbar" aria-label="Majesty Restaurant photos"></div>
+      </div>
+    </section>
+
+    <div class="gold-divider"></div>
+
+    <!-- 5. Useful Links -->
+    <section class="mb-12 scroll-fade-in" id="links" aria-labelledby="links-heading">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-8 h-[1px] bg-pure-gold" aria-hidden="true"></div>
+        <h2 class="font-label-sm text-label-sm text-primary tracking-wide uppercase" id="links-heading">Useful Links</h2>
+      </div>
+      <div class="flex flex-col gap-3">
+        <a href="https://hotelamericanosaipan.com" target="_blank" rel="noopener noreferrer"
+           class="block w-full bg-primary py-4 rounded-md font-label-sm text-label-sm text-white tracking-widest uppercase text-center hover:bg-primary-container transition-all shadow-md active:scale-[0.98]">
+          Visit Our Website
+        </a>
+        <a href="https://www.google.com/travel/hotels/entity/ChoIw4eqgtCS3aWvARoNL2cvMTFqMGo5M2hwbhAB/reviews?utm_campaign=sharing&utm_medium=link&utm_source=htls&ts=CAEaIAoCGgASGhIUCgcI6g8QBxgOEgcI6g8QBxgPGAEyAhAAKgkKBToDVVNEGgA" target="_blank" rel="noopener noreferrer"
+           class="block w-full border border-primary py-4 rounded-md font-label-sm text-label-sm text-primary tracking-widest uppercase text-center hover:bg-primary/5 transition-all">
+          Leave a Google Review
+        </a>
+        <a href="https://www.google.com/maps?pb=!1m18!1m12!1m3!1d296.08186921357014!2d145.71744805342402!3d15.212934225052125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x66d8b1a9319b6547%3A0xaf4b7495004a83c3!2sHotel%20Americano!5e1!3m2!1sen!2s!4v1780537972882!5m2!1sen!2s" target="_blank" rel="noopener noreferrer"
+           class="block w-full border border-primary py-4 rounded-md font-label-sm text-label-sm text-primary tracking-widest uppercase text-center hover:bg-primary/5 transition-all">
+          Get Directions
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-deep-onyx border-t border-pure-gold/20 flex items-center gap-6 pr-margin-mobile overflow-hidden">
+    <img src="assets/Hotel Americano HA Only Transparent Gold.png" alt="Hotel Americano" class="h-40 w-auto flex-shrink-0 opacity-90">
+    <div class="flex flex-col gap-3 py-6 min-w-0">
+      <p class="font-label-sm text-[11px] uppercase tracking-widest text-pure-gold">
+        Hotel Americano
+      </p>
+      <div class="flex gap-5">
+        <a href="https://hotelamericanosaipan.com" target="_blank" rel="noopener noreferrer"
+           class="font-label-sm text-[10px] uppercase tracking-widest text-pure-gold/70 hover:text-pure-gold transition-colors">
+          Website
+        </a>
+        <a href="https://www.google.com/travel/hotels/entity/ChoIw4eqgtCS3aWvARoNL2cvMTFqMGo5M2hwbhAB/reviews?utm_campaign=sharing&utm_medium=link&utm_source=htls&ts=CAEaIAoCGgASGhIUCgcI6g8QBxgOEgcI6g8QBxgPGAEyAhAAKgkKBToDVVNEGgA" target="_blank" rel="noopener noreferrer"
+           class="font-label-sm text-[10px] uppercase tracking-widest text-pure-gold/70 hover:text-pure-gold transition-colors">
+          Review Us
+        </a>
+      </div>
+      <div class="h-px bg-pure-gold/20"></div>
+      <p class="font-label-sm text-[9px] uppercase tracking-wide text-pure-gold/40 leading-relaxed">
+        © Top Development Incorporated<br>info.hotelamericanosaipan.com
+      </p>
+    </div>
+  </footer>
+
+  <!-- Bottom Nav -->
+  <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-50 flex justify-around items-center py-4 bg-surface shadow-[0_-1px_0_0_rgba(197,148,65,0.2)]" aria-label="Page navigation">
+    <a class="flex flex-col items-center justify-center text-pure-gold" href="#home">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;">home</span>
+      <span class="font-label-sm text-[10px] uppercase tracking-widest mt-1">Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#wifi">
+      <span class="material-symbols-outlined">wifi</span>
+      <span class="font-label-sm text-[10px] uppercase tracking-widest mt-1">WiFi</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#rules">
+      <span class="material-symbols-outlined">menu_book</span>
+      <span class="font-label-sm text-[10px] uppercase tracking-widest mt-1">Rules</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant" href="#links">
+      <span class="material-symbols-outlined">link</span>
+      <span class="font-label-sm text-[10px] uppercase tracking-widest mt-1">Links</span>
+    </a>
+  </nav>
+
+  <div class="h-20 w-full" aria-hidden="true"></div>
+
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

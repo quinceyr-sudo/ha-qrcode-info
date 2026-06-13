@@ -1,0 +1,227 @@
+# ha-qrcode-info — Project Brief
+
+## What This Is
+A static, mobile-first guest info page for Hotel Americano, accessed via QR code printed on in-room cards.
+URL: **info.hotelamericanosaipan.com**
+Hosted on: **Cloudflare Pages** (GitHub repo: quinceyr-sudo/ha-qrcode-info)
+
+---
+
+## Tech Stack
+- Vanilla HTML / JS — no frameworks, no build step
+- **Tailwind CSS via CDN** (`cdn.tailwindcss.com?plugins=forms,container-queries`) with inline config
+- `style.css` holds only custom styles not achievable in Tailwind (keyframe animations, shimmer bar, scroll-reveal, photo strip)
+- Google Fonts: **Cormorant Garamond** (serif titles) + **EB Garamond** (headlines) + **Jost** (body/UI)
+- **Material Symbols Outlined** (Google icon font) for nav and number chevrons
+- Deploys automatically via Cloudflare Pages on push to `main`
+
+---
+
+## Brand / Color Tokens (Tailwind config)
+
+| Token                    | Value       | Usage                        |
+|--------------------------|-------------|------------------------------|
+| `pure-gold`              | `#C59441`   | Accents, shimmer bar, icons  |
+| `primary`                | `#7c572b`   | Buttons, headings, links     |
+| `primary-container`      | `#c59765`   | Button hover                 |
+| `deep-onyx`              | `#0F0802`   | Footer background            |
+| `charcoal-text`          | `#3B3B3C`   | Body text                    |
+| `surface-container-low`  | `#f7f3ed`   | Card backgrounds             |
+| `surface-container`      | `#f1ede7`   | Card hover state             |
+| `on-surface-variant`     | `#50453b`   | Muted/secondary text         |
+
+Background: `#F7F3ED` (warm cream). Use the same visual language as hotelamericanosaipan.com — warm, refined, minimal.
+
+---
+
+## File Structure
+
+```
+ha-qrcode-info/
+├── index.html
+├── main.js
+├── style.css
+└── assets/
+    ├── Hotel Americano LOGO 2.png           ← original full logo (unused in UI)
+    ├── Hotel Americano HA logowider.png     ← main header logo (w-56)
+    ├── Hotel Americano HA Only Transparent Gold.png  ← footer monogram (h-40)
+    ├── hero.jpg                             ← drone exterior (used for hero section)
+    ├── lobby.avif
+    ├── sundeck.avif                         ← do NOT include in random photo pool
+    ├── majesty logo flat.jpeg               ← original (uncompressed)
+    ├── photos/                              ← hotel photo pool (random strip)
+    │   ├── aerial.avif
+    │   ├── chandelier.avif
+    │   ├── lobby-floor.avif
+    │   ├── lobby-lounge.avif
+    │   ├── lobby-stairs.avif
+    │   ├── reception.avif
+    │   ├── reception2.avif
+    │   ├── breakfast.avif
+    │   ├── breakfast2.avif
+    │   ├── room-entrance.avif
+    │   ├── room-tv.avif
+    │   ├── room-amenity.avif
+    │   ├── room-safe.avif
+    │   ├── staircase.avif
+    │   ├── staircase2.avif
+    │   ├── facade.webp
+    │   ├── room-twin.webp
+    │   ├── room-double.webp
+    │   └── hero.webp
+    └── majesty/                             ← Majesty restaurant (all compressed)
+        ├── logo.webp                        ← restaurant logo (33KB)
+        ├── front-photo.webp
+        ├── interior.webp
+        ├── interior-4.webp
+        ├── 013.webp
+        ├── 018.webp
+        ├── 026.webp
+        ├── img_3254.webp … img_3597.webp
+```
+
+**Adding new photos:** Source images live in `c:\ha-website\assets\images\`. Compress with:
+```bash
+ffmpeg -i input.jpg -vf "scale='min(960,iw):-2'" -c:v libwebp -quality 75 output.webp
+```
+Target ≤ 150KB per image. Do not include sundeck photos in the hotel pool.
+
+---
+
+## Room Data
+
+### Valid Rooms
+```js
+const ROOMS = {
+  // Floor 1
+  101: { floor: 1, type: "Deluxe Twin" },
+  102: { floor: 1, type: "Deluxe Twin" },
+  // Floor 2
+  201: { floor: 2, type: "Deluxe Double" },
+  202: { floor: 2, type: "Deluxe Double" },
+  203: { floor: 2, type: "Deluxe Twin" },
+  // ... 204–212 all Deluxe Twin except 211 (Deluxe Double)
+  // Floor 3
+  301: { floor: 3, type: "Deluxe Double" },
+  // ... 302–312 all Deluxe Twin except 311 (Deluxe Double)
+  // NOTE: Room 310 is an office — not a valid guest room
+};
+```
+
+### URL Pattern
+`info.hotelamericanosaipan.com?room=201`
+
+JS reads `?room=` on load. If missing or invalid → show generic page (no room banner), no error.
+
+---
+
+## Page Sections (in order)
+
+### 0. Top Bar
+- 4px gold shimmer gradient bar, sticky at top
+
+### 1. Hero + Header
+- Full-width hero image (`assets/hero.jpg`), Ken Burns animation
+- Logo centered below hero (`assets/Hotel Americano HA logowider.png`, w-56)
+- "Welcome to Hotel Americano" heading
+- If valid room param: pill badge — **Room 201 · Deluxe Double · Floor 2**
+
+### 2. Random Photo Strip
+- Horizontal scrollable strip of 6 randomly shuffled hotel photos
+- Pool: all files in `assets/photos/` — **no sundeck photos**
+- Reshuffled on every page load
+- Scroll-snap enabled, hidden scrollbar
+
+### 3. House Rules
+Rendered from `RULES` array in `main.js`:
+- Check-in: 2:00 PM · Check-out: 12:00 PM
+- Quiet hours: 10:00 PM – 7:00 AM
+- No smoking inside (designated area outside)
+- No parties or loud gatherings
+- Visitors must register at the front desk
+- Fee for lost/damaged key cards
+- No pets
+- Conserve water and electricity
+- No hotel property outside the premises
+- Management not liable for lost valuables
+- Disposable towels provided as standard; cloth towels available on request at front desk
+- Additional amenities (combs, vanity kits, extra towels) available on request at front desk
+- Housekeeping available daily from 9:00 AM to 2:00 PM
+- Airport drop-off available for a fee — arrange through front desk, call ahead to schedule
+
+### 4. WiFi
+- Network: **Hotel Americano WIFI**
+- Password: **hotel8888**
+- Tap-to-copy card with animated WiFi icon
+
+### 5. Important Numbers
+Rendered from `NUMBERS` array in `main.js`. Current entries:
+
+| Label            | Display               | Tel link          | Note                    |
+|------------------|-----------------------|-------------------|-------------------------|
+| Front Desk       | 670-233-6074 · 6075   | `+16702336074`    | "From room phone: Dial 0" |
+| Taxi & Concierge | Ask the Front Desk    | none (info only)  | —                       |
+| Emergency        | 911                   | `911`             | —                       |
+
+Still needed: CHC Hospital number, Taxi direct number.
+
+### 6. Majesty Chinese Restaurant
+- Dark gradient card with gold top border
+- Hero: single random photo from `assets/majesty/` pool (changes on each load)
+- Majesty logo: `assets/majesty/logo.webp` at `h-[7.5rem]` (3× original size)
+- Heading: "Saipan's Finest Chinese Dining" — **no promo/offer language**
+- Description: authentic Cantonese cuisine pitch
+- Reservation contact: 📞 670-233-2088
+- Website: 🌐 majesty-restaurant.com
+- Scrollable photo strip at the bottom (8 random Majesty photos, `h-24`)
+
+### 7. Useful Links
+- **Visit Our Website** → https://hotelamericanosaipan.com (primary CTA, filled gold button)
+- **Leave a Google Review** → Google travel hotels review URL
+- **Get Directions** → Google Maps pin for Hotel Americano (from embed in hotelamericanosaipan.com)
+
+### 8. Footer
+- Dark onyx background (`#0F0802`), gold top border
+- Side-by-side layout: HA monogram image (`h-40`) on the left, text stack on the right
+- Right side: "Hotel Americano" label, Website + Review Us links, gold divider, copyright + domain
+- All text in gold tones (`text-pure-gold` / `/70` / `/40` for hierarchy)
+
+### 9. Bottom Navigation (fixed)
+- Home / WiFi / Rules / Links
+- Anchors scroll to `#home`, `#wifi`, `#rules`, `#links`
+
+---
+
+## Animations
+- **Shimmer bar** — `shimmer` keyframe on the gold top bar, continuous
+- **Hero Ken Burns** — slow zoom + pan on hero image on load
+- **Logo/title entrance** — `scaleIn` + `fadeInUp` with stagger on page load
+- **Scroll reveal** — `IntersectionObserver` triggers `.visible` on `.scroll-fade-in` elements
+- **Staggered list items** — rules and number rows use `--i` CSS variable for sequential delay
+- **WiFi icon pulse** — `wifiPulse` breathing animation
+- **Photo strip hover** — `scale(1.03)` on hover
+
+---
+
+## Design Notes
+- **Mobile-first** — almost always viewed on a phone after scanning a QR
+- Max content width: **480px**, centered, `shadow-2xl` on desktop
+- Images compressed to WebP/AVIF, target ≤ 150KB each
+- Sections separated by gold dividers (`rgba(197, 148, 65, 0.2)`)
+- Keep it clean and skimmable — guests won't read walls of text
+
+---
+
+## Deployment
+- Cloudflare Pages auto-deploys on push to `main`
+- Custom domain: `info.hotelamericanosaipan.com`
+- CNAME in Cloudflare DNS pointing to Pages deployment
+- No environment variables needed (fully static)
+
+---
+
+## Out of Scope (for now)
+- Live Beds24 data (no dynamic guest name/dates)
+- Admin panel for updating content
+- Multiple languages
+- CHC Hospital and Taxi direct numbers (pending)
