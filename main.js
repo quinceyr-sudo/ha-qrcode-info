@@ -38,6 +38,7 @@ const RULES = [
   "No parties or loud gatherings in guest rooms.",
   "Visitors must be registered at the front desk.",
   "A fee applies for lost or damaged key cards.",
+  "All major credit and debit cards are accepted, except American Express.",
   "Pets are not allowed on the premises.",
   "Please conserve water and electricity.",
   "Hotel property must not be taken outside the premises.",
@@ -94,7 +95,7 @@ const HOTEL_PHOTOS = [
   { src: "assets/photos/facade.webp",        alt: "Hotel facade" },
   { src: "assets/photos/room-twin.webp",     alt: "Deluxe Twin room" },
   { src: "assets/photos/room-double.webp",   alt: "Deluxe Double room" },
-  { src: "assets/photos/hero.webp",          alt: "Hotel exterior" },
+  { src: "assets/photos/hero 2.webp",        alt: "Hotel exterior" },
   { src: "assets/lobby.avif",                alt: "Hotel lobby" },
 ];
 

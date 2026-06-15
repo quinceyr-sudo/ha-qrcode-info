@@ -5,6 +5,9 @@ assets/sundeck-originals/
 # Brainstorming session files
 .superpowers/
 
+# Claude Code local files
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
