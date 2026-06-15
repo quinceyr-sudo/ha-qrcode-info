@@ -38,7 +38,7 @@ const RULES = [
   "No parties or loud gatherings in guest rooms.",
   "Visitors must be registered at the front desk.",
   "A fee applies for lost or damaged key cards.",
-  "All major credit and debit cards are accepted, except American Express.",
+  "Cash and all major credit and debit cards are accepted, except American Express.",
   "Pets are not allowed on the premises.",
   "Please conserve water and electricity.",
   "Hotel property must not be taken outside the premises.",

@@ -142,7 +142,7 @@ Rendered from `RULES` array in `main.js`:
 - No parties or loud gatherings
 - Visitors must register at the front desk
 - Fee for lost/damaged key cards
-- All major credit and debit cards accepted, except American Express
+- Cash and all major credit and debit cards accepted, except American Express
 - No pets
 - Conserve water and electricity
 - No hotel property outside the premises
