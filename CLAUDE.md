@@ -46,7 +46,7 @@ ha-qrcode-info/
     ├── Hotel Americano HA logowider.png     ← main header logo (w-56)
     ├── Hotel Americano HA Only Transparent Gold.png  ← footer monogram (h-40)
     ├── qr-print.html                        ← printable QR code sheet for in-room cards
-    ├── hero.jpg                             ← drone exterior (used for hero section)
+    ├── hero.jpg                             ← dramatic upward exterior shot (used for hero section)
     ├── lobby.avif
     ├── sundeck.avif                         ← do NOT include in random photo pool
     ├── majesty logo flat.jpeg               ← original (uncompressed)
@@ -69,7 +69,7 @@ ha-qrcode-info/
     │   ├── facade.webp
     │   ├── room-twin.webp
     │   ├── room-double.webp
-    │   └── hero.webp
+    │   └── hero 2.webp                       ← cleaned-up front shot (side buildings faded out)
     └── majesty/                             ← Majesty restaurant (all compressed)
         ├── logo.webp                        ← restaurant logo (33KB)
         ├── front-photo.webp
@@ -122,7 +122,8 @@ JS reads `?room=` on load. If missing or invalid → show generic page (no room 
 - 4px gold shimmer gradient bar, sticky at top
 
 ### 1. Hero + Header
-- Full-width hero image (`assets/hero.jpg`), Ken Burns animation
+- Full-width hero image (`assets/hero.jpg`) — dramatic upward exterior shot, Ken Burns animation
+- Image uses `object-cover object-[center_75%]` to fill the frame and minimize sky
 - Logo centered below hero (`assets/Hotel Americano HA logowider.png`, w-56)
 - "Welcome to Hotel Americano" heading
 - If valid room param: pill badge — **Room 201 · Deluxe Double · Floor 2**
@@ -141,6 +142,7 @@ Rendered from `RULES` array in `main.js`:
 - No parties or loud gatherings
 - Visitors must register at the front desk
 - Fee for lost/damaged key cards
+- All major credit and debit cards accepted, except American Express
 - No pets
 - Conserve water and electricity
 - No hotel property outside the premises
@@ -222,7 +224,7 @@ Still needed: CHC Hospital number, Taxi direct number.
 ---
 
 ## Git Notes
-- `.gitignore` excludes `assets/majesty photos/` (uncompressed source JPGs), `.superpowers/`, and OS/editor noise
+- `.gitignore` excludes `assets/majesty photos/` (uncompressed source JPGs), `.superpowers/`, `.claude/`, and OS/editor noise
 - **Never commit uncompressed originals** — they bloated the repo to 173MB once; history had to be rewritten with `git filter-repo` to fix it
 - Always compress to WebP/AVIF before adding to `assets/` (see compression command above)
 - Cloudflare Pages deploys automatically on push to `main`; no manual deploy needed
