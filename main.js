@@ -47,6 +47,7 @@ const RULES = [
   "Additional amenities — combs, vanity kits, and extra towels — are available on request at the front desk.",
   "Housekeeping service is available daily from 9:00 AM to 2:00 PM.",
   "Airport drop-off is available for a fee and can be arranged through the front desk. Please call ahead to schedule.",
+  "If no front desk staff is on duty, please use the front desk kiosk and press “Need Help” to reach a staff member for urgent assistance.",
 ];
 
 const NUMBERS = [

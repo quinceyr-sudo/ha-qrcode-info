@@ -151,6 +151,7 @@ Rendered from `RULES` array in `main.js`:
 - Additional amenities (combs, vanity kits, extra towels) available on request at front desk
 - Housekeeping available daily from 9:00 AM to 2:00 PM
 - Airport drop-off available for a fee — arrange through front desk, call ahead to schedule
+- If no front desk staff is on duty, use the front desk kiosk and press "Need Help" to reach a staff member for urgent assistance
 
 ### 4. WiFi
 - Network: **Hotel Americano WIFI**
