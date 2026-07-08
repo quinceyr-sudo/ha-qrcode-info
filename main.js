@@ -127,6 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMajestyStrip();
   initWifiCopy();
   initScrollAnimations();
+  initAutoScrollStrip(document.getElementById("photo-strip"));
+  initAutoScrollStrip(document.getElementById("majesty-strip"));
 });
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
@@ -191,7 +193,7 @@ function renderMajestyPhoto() {
 function renderMajestyStrip() {
   const strip = document.getElementById("majesty-strip");
   if (!strip) return;
-  const picked = shuffle(MAJESTY_PHOTOS).slice(0, 8);
+  const picked = shuffle(MAJESTY_PHOTOS).slice(0, 6);
   strip.innerHTML = "";
   picked.forEach(({ src, alt }) => {
     const img = document.createElement("img");
@@ -201,6 +203,74 @@ function renderMajestyStrip() {
     img.loading = "lazy";
     strip.appendChild(img);
   });
+}
+
+// ─── AUTO-SCROLL STRIPS ──────────────────────────────────────────────────────
+// Mirrors the property-band carousel behavior on tdi-website: auto-advance on
+// an interval, pause while the user is touching/hovering it, only run while
+// the strip is on screen, and skip entirely under reduced-motion.
+
+function initAutoScrollStrip(strip, interval = 3000) {
+  if (!strip) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const realItems = Array.from(strip.children);
+  const realCount = realItems.length;
+  if (realCount < 2) return;
+
+  // Duplicate the set once so the strip can keep scrolling forward forever.
+  // Once it lands on a duplicate (visually identical to its real twin), we
+  // silently rewind to the matching real photo so it loops seamlessly
+  // instead of snapping back to the start.
+  realItems.forEach((item) => {
+    const clone = item.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    strip.appendChild(clone);
+  });
+  const allItems = Array.from(strip.children);
+
+  let timer = null;
+  let paused = false;
+  let current = 0;
+
+  function rewindIfNeeded() {
+    if (current < realCount) return;
+    current -= realCount;
+    strip.scrollTo({ left: allItems[current].offsetLeft, behavior: "auto" });
+  }
+
+  const supportsScrollend = "onscrollend" in window;
+  if (supportsScrollend) {
+    strip.addEventListener("scrollend", rewindIfNeeded);
+  }
+
+  function advance() {
+    if (paused || document.hidden) return;
+    current++;
+    strip.scrollTo({ left: allItems[current].offsetLeft, behavior: "smooth" });
+    if (!supportsScrollend) setTimeout(rewindIfNeeded, 500);
+  }
+
+  function start() {
+    if (!timer) timer = setInterval(advance, interval);
+  }
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  strip.addEventListener("touchstart", () => { paused = true; }, { passive: true });
+  strip.addEventListener("touchend", () => { paused = false; });
+  strip.addEventListener("mouseenter", () => { paused = true; });
+  strip.addEventListener("mouseleave", () => { paused = false; });
+
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => (entry.isIntersecting ? start() : stop()));
+    }, { threshold: 0.4 });
+    io.observe(strip);
+  } else {
+    start();
+  }
 }
 
 // ─── RULES ───────────────────────────────────────────────────────────────────
@@ -213,7 +283,7 @@ function renderRules() {
     li.className = "flex items-start gap-3 stagger-item";
     li.style.setProperty("--i", i);
     li.innerHTML = `
-      <span class="text-pure-gold mt-1 flex-shrink-0 select-none" aria-hidden="true">—</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" aria-hidden="true"></span>
       <p class="font-body-md text-body-md leading-relaxed">${rule}</p>
     `;
     list.appendChild(li);

@@ -125,17 +125,19 @@ JS reads `?room=` on load. If missing or invalid → show generic page (no room 
 - Full-width hero image (`assets/hero.jpg`) — dramatic upward exterior shot, Ken Burns animation
 - Image uses `object-cover object-[center_75%]` to fill the frame and minimize sky
 - Logo centered below hero (`assets/Hotel Americano HA logowider.png`, w-56)
-- "Welcome to Hotel Americano" heading
+- "Welcome To<br>Hotel Americano" heading — bold, tight line spacing (`leading-tight`), forced line break after "Welcome To"
 - If valid room param: pill badge — **Room 201 · Deluxe Double · Floor 2**
 
 ### 2. Random Photo Strip
-- Horizontal scrollable strip of 6 randomly shuffled hotel photos
+- Horizontal strip of 6 randomly shuffled hotel photos
 - Pool: all files in `assets/photos/` — **no sundeck photos**
 - Reshuffled on every page load
 - Scroll-snap enabled, hidden scrollbar
+- **Auto-scrolls continuously** (see Animations → Auto-scroll strips)
 
 ### 3. House Rules
-Rendered from `RULES` array in `main.js`:
+- Heading: centered pill badge (`bg-primary`, `rounded-[999px]`, bold white uppercase, sized to fit content — not full-width)
+- Rendered from `RULES` array in `main.js`:
 - Check-in: 2:00 PM · Check-out: 12:00 PM
 - Quiet hours: 10:00 PM – 7:00 AM
 - No smoking inside (designated area outside)
@@ -157,9 +159,11 @@ Rendered from `RULES` array in `main.js`:
 - Network: **Hotel Americano WIFI**
 - Password: **hotel8888**
 - Tap-to-copy card with animated WiFi icon
+- Card background: `bg-pure-gold/10` (soft gold tint, distinct from the page's cream background)
 
 ### 5. Important Numbers
-Rendered from `NUMBERS` array in `main.js`. Current entries:
+- Heading: bold uppercase brown text, left-aligned (no pill, no line — plain label)
+- Rendered from `NUMBERS` array in `main.js`. Current entries:
 
 | Label            | Display               | Tel link          | Note                    |
 |------------------|-----------------------|-------------------|-------------------------|
@@ -177,12 +181,17 @@ Still needed: CHC Hospital number, Taxi direct number.
 - Description: authentic Cantonese cuisine pitch
 - Reservation contact: 📞 670-233-2088
 - Website: 🌐 majesty-restaurant.com
-- Scrollable photo strip at the bottom (8 random Majesty photos, `h-24`)
+- Scrollable photo strip at the bottom (6 random Majesty photos, `h-24`) — matches HA strip count
+- **Auto-scrolls continuously**, same behavior as the hotel photo strip
 
 ### 7. Useful Links
+- Heading: bold uppercase brown text, left-aligned (no pill, no line — plain label)
 - **Visit Our Website** → https://hotelamericanosaipan.com (primary CTA, filled gold button)
 - **Leave a Google Review** → Google travel hotels review URL
 - **Get Directions** → Google Maps pin for Hotel Americano (from embed in hotelamericanosaipan.com)
+- **Majesty Restaurant** → https://majesty-restaurant.com (outlined button)
+- **TDI Saipan** → https://tdi-saipan.com (outlined button, tagged "· Coming Soon" — site not yet live)
+- **Residence Lodge** → https://residencelodge.com (outlined button, tagged "· Coming Soon" — site not yet live)
 
 ### 8. Footer
 - Dark onyx background (`#0F0802`), gold top border
@@ -204,6 +213,10 @@ Still needed: CHC Hospital number, Taxi direct number.
 - **Staggered list items** — rules and number rows use `--i` CSS variable for sequential delay
 - **WiFi icon pulse** — `wifiPulse` breathing animation
 - **Photo strip hover** — `scale(1.03)` on hover
+- **Auto-scroll strips** — `initAutoScrollStrip()` in `main.js` drives both the HA and Majesty photo strips. Behavior adapted from the property-band carousels on `c:\tdi-website`:
+  - Advances on a fixed interval (3s), pausing while the user is touching/hovering the strip
+  - Only runs while the strip is on screen (`IntersectionObserver`), skips entirely under `prefers-reduced-motion`
+  - **Loops continuously** — each strip's photo set is duplicated (`aria-hidden` clones) so it can keep scrolling forward forever; once it lands on a duplicate (pixel-identical to its real twin), it silently snaps back to the matching real photo (via `scrollend`, with a `setTimeout` fallback) instead of jumping backward to the start
 
 ---
 

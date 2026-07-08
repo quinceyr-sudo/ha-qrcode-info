@@ -92,8 +92,8 @@
   <header class="pt-0 pb-8 px-margin-mobile flex flex-col items-center gap-4 -mt-10 relative z-10 header-animate" id="home">
     <img alt="Hotel Americano" class="h-auto w-56 drop-shadow-lg logo-animate" src="assets/Hotel Americano HA logowider.png">
     <div class="text-center title-animate">
-      <h1 class="serif-title font-light uppercase tracking-[0.2em] text-headline-md leading-snug">
-        Welcome to Hotel Americano
+      <h1 class="serif-title font-bold uppercase tracking-[0.2em] text-headline-md leading-tight">
+        Welcome to<br>Hotel Americano
       </h1>
       <div id="room-banner" class="hidden mt-4">
         <div class="inline-flex items-center px-4 py-1.5 border border-pure-gold/40 rounded-full bg-white/60 backdrop-blur-sm">
@@ -112,9 +112,10 @@
 
     <!-- 1. House Rules -->
     <section class="mb-10 scroll-fade-in" id="rules" aria-labelledby="rules-heading">
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-8 h-[1px] bg-pure-gold" aria-hidden="true"></div>
-        <h2 class="font-label-sm text-label-sm text-primary tracking-wide uppercase" id="rules-heading">House Rules</h2>
+      <div class="flex justify-center mb-6">
+        <div class="rules-banner bg-primary rounded-[999px] py-2.5 px-10 shadow-soft">
+          <h2 class="font-body-md text-white font-bold uppercase tracking-wide text-2xl leading-tight whitespace-nowrap" id="rules-heading">House Rules</h2>
+        </div>
       </div>
       <ul class="rules-list space-y-4"></ul>
     </section>
@@ -123,7 +124,7 @@
 
     <!-- 2. WiFi -->
     <section class="mb-10 scroll-fade-in" id="wifi" aria-labelledby="wifi-heading">
-      <div class="bg-surface-container-low rounded-lg p-6 gold-border-top shadow-soft">
+      <div class="bg-pure-gold/10 rounded-lg p-6 gold-border-top shadow-soft">
         <div class="flex justify-between items-start mb-6">
           <div>
             <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-1" id="wifi-heading">WiFi</p>
@@ -148,10 +149,7 @@
 
     <!-- 3. Important Numbers -->
     <section class="mb-10 scroll-fade-in" id="numbers" aria-labelledby="numbers-heading">
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-8 h-[1px] bg-pure-gold" aria-hidden="true"></div>
-        <h2 class="font-label-sm text-label-sm text-primary tracking-wide uppercase" id="numbers-heading">Important Numbers</h2>
-      </div>
+      <h2 class="font-body-md text-primary font-bold uppercase tracking-wide text-2xl leading-tight mb-6" id="numbers-heading">Important Numbers</h2>
       <div class="space-y-3" id="numbers-list" role="list"></div>
     </section>
 
@@ -187,7 +185,7 @@
           </div>
         </div>
         <!-- Majesty photo strip -->
-        <div id="majesty-strip" class="flex gap-1.5 pb-5 px-5 overflow-x-auto no-scrollbar" aria-label="Majesty Restaurant photos"></div>
+        <div id="majesty-strip" class="flex gap-1.5 pb-5 px-5 overflow-x-auto photo-strip no-scrollbar" aria-label="Majesty Restaurant photos"></div>
       </div>
     </section>
 
@@ -195,10 +193,7 @@
 
     <!-- 5. Useful Links -->
     <section class="mb-12 scroll-fade-in" id="links" aria-labelledby="links-heading">
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-8 h-[1px] bg-pure-gold" aria-hidden="true"></div>
-        <h2 class="font-label-sm text-label-sm text-primary tracking-wide uppercase" id="links-heading">Useful Links</h2>
-      </div>
+      <h2 class="font-body-md text-primary font-bold uppercase tracking-wide text-2xl leading-tight mb-6" id="links-heading">Useful Links</h2>
       <div class="flex flex-col gap-3">
         <a href="https://hotelamericanosaipan.com" target="_blank" rel="noopener noreferrer"
            class="block w-full bg-primary py-4 rounded-md font-label-sm text-label-sm text-white tracking-widest uppercase text-center hover:bg-primary-container transition-all shadow-md active:scale-[0.98]">
@@ -211,6 +206,18 @@
         <a href="https://www.google.com/maps?pb=!1m18!1m12!1m3!1d296.08186921357014!2d145.71744805342402!3d15.212934225052125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x66d8b1a9319b6547%3A0xaf4b7495004a83c3!2sHotel%20Americano!5e1!3m2!1sen!2s!4v1780537972882!5m2!1sen!2s" target="_blank" rel="noopener noreferrer"
            class="block w-full border border-primary py-4 rounded-md font-label-sm text-label-sm text-primary tracking-widest uppercase text-center hover:bg-primary/5 transition-all">
           Get Directions
+        </a>
+        <a href="https://majesty-restaurant.com" target="_blank" rel="noopener noreferrer"
+           class="block w-full border border-primary py-4 rounded-md font-label-sm text-label-sm text-primary tracking-widest uppercase text-center hover:bg-primary/5 transition-all">
+          Majesty Restaurant
+        </a>
+        <a href="https://tdi-saipan.com" target="_blank" rel="noopener noreferrer"
+           class="block w-full border border-primary py-4 rounded-md font-label-sm text-label-sm text-primary tracking-widest uppercase text-center hover:bg-primary/5 transition-all">
+          TDI Saipan <span class="text-primary/50">· Coming Soon</span>
+        </a>
+        <a href="https://residencelodge.com" target="_blank" rel="noopener noreferrer"
+           class="block w-full border border-primary py-4 rounded-md font-label-sm text-label-sm text-primary tracking-widest uppercase text-center hover:bg-primary/5 transition-all">
+          Residence Lodge <span class="text-primary/50">· Coming Soon</span>
         </a>
       </div>
     </section>
