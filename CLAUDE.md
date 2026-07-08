@@ -177,9 +177,9 @@ Still needed: CHC Hospital number, Taxi direct number.
 - Dark gradient card with gold top border
 - Hero: single random photo from `assets/majesty/` pool (changes on each load)
 - Majesty logo: `assets/majesty/logo.webp` at `h-[7.5rem]` (3× original size)
+- Beside the logo (top row, vertically centered against it): **Check Out Our Menu** pill button → https://majesty-restaurant.com/menu.html (filled gold, dark bold text) with an italic serif "Ordering Available Soon!" caption underneath (`text-white text-xl`). Row uses `items-center` — the logo's gold-bordered text band measures out to sit almost exactly at the image's vertical midpoint (y=156–323 of 480px), so centering on the logo also centers on that text band. Button group nudged `ml-[7px]` to balance the horizontal gap against the logo.
 - Heading: "Saipan's Finest Chinese Dining" — **no promo/offer language**
 - Description: authentic Cantonese cuisine pitch
-- **Check Out Our Menu** button → https://majesty-restaurant.com/menu.html (filled gold button, dark text) with an "Ordering Available Soon" caption underneath (`text-pure-gold`, full opacity — kept low-opacity gold here once and it was unreadable)
 - Reservation contact: 📞 670-233-2088
 - Website: 🌐 majesty-restaurant.com
 - Scrollable photo strip at the bottom (6 random Majesty photos, `h-24`) — matches HA strip count
