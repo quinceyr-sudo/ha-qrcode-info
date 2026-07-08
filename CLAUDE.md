@@ -51,7 +51,6 @@ ha-qrcode-info/
     ├── sundeck.avif                         ← do NOT include in random photo pool
     ├── majesty logo flat.jpeg               ← original (uncompressed)
     ├── photos/                              ← hotel photo pool (random strip)
-    │   ├── aerial.avif
     │   ├── chandelier.avif
     │   ├── lobby-floor.avif
     │   ├── lobby-lounge.avif

@@ -78,7 +78,6 @@ const NUMBERS = [
 // ─── PHOTO POOLS ─────────────────────────────────────────────────────────────
 
 const HOTEL_PHOTOS = [
-  { src: "assets/photos/aerial.avif",        alt: "Aerial view" },
   { src: "assets/photos/chandelier.avif",    alt: "Lobby chandelier" },
   { src: "assets/photos/lobby-floor.avif",   alt: "First floor lobby" },
   { src: "assets/photos/lobby-lounge.avif",  alt: "Lobby lounge" },
