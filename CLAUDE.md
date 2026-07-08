@@ -179,6 +179,7 @@ Still needed: CHC Hospital number, Taxi direct number.
 - Majesty logo: `assets/majesty/logo.webp` at `h-[7.5rem]` (3× original size)
 - Heading: "Saipan's Finest Chinese Dining" — **no promo/offer language**
 - Description: authentic Cantonese cuisine pitch
+- **Check Out Our Menu** button → https://majesty-restaurant.com/menu.html (filled gold button, dark text) with an "Ordering Available Soon" caption underneath (`text-pure-gold`, full opacity — kept low-opacity gold here once and it was unreadable)
 - Reservation contact: 📞 670-233-2088
 - Website: 🌐 majesty-restaurant.com
 - Scrollable photo strip at the bottom (6 random Majesty photos, `h-24`) — matches HA strip count
