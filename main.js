@@ -197,7 +197,7 @@ function renderMajestyStrip() {
     const img = document.createElement("img");
     img.src = src;
     img.alt = alt;
-    img.className = "h-24 w-32 flex-shrink-0 object-cover rounded-md opacity-75 transition-all duration-300 hover:opacity-100 hover:scale-[1.03]";
+    img.className = "h-24 w-32 flex-shrink-0 object-cover rounded-md brightness-75 transition-all duration-300 hover:brightness-100 hover:scale-[1.03]";
     img.loading = "lazy";
     strip.appendChild(img);
   });
