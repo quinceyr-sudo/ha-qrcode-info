@@ -8,11 +8,11 @@ body {
 
 .serif-title { font-family: 'Cormorant Garamond', serif; }
 
-.gold-border-top { border-top: 1px solid #C59441; }
+.gold-border-top { border-top: 1px solid #C59765; }
 
 .gold-divider {
   height: 1px;
-  background: rgba(197, 148, 65, 0.2);
+  background: rgba(197, 151, 101, 0.2);
   width: 100%;
   margin: 32px 0;
 }
@@ -73,9 +73,9 @@ body {
   background: linear-gradient(
     90deg,
     #B7652B 0%,
-    #C59441 25%,
+    #C59765 25%,
     #efbd88 50%,
-    #C59441 75%,
+    #C59765 75%,
     #B7652B 100%
   );
   background-size: 400% auto;

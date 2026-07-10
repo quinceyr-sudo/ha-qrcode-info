@@ -25,8 +25,7 @@ const ROOMS = {
   308: { floor: 3, type: "Deluxe Twin" },
   309: { floor: 3, type: "Deluxe Twin" },
   311: { floor: 3, type: "Deluxe Double" },
-  312: { floor: 3, type: "Deluxe Twin" },
-  // 310 intentionally excluded — office
+  // 310 and 312 intentionally excluded — TDI corporate office
 };
 
 // ─── CONTENT ────────────────────────────────────────────────────────────────
@@ -54,7 +53,7 @@ const NUMBERS = [
   {
     label:    "Front Desk",
     display:  "670-233-6074 · 6075",
-    tel:      "16702336074",
+    tel:      "+16702336074",
     note:     "From room phone: Dial 0",
     icon:     "📞",
     tappable: true,
@@ -356,9 +355,9 @@ function initWifiCopy() {
 function showCopied(btn, status) {
   const original = btn.textContent;
   btn.textContent = "COPIED ✓";
-  btn.style.backgroundColor = "#C59441";
+  btn.style.backgroundColor = "#C59765";
   btn.style.color = "#ffffff";
-  btn.style.borderColor = "#C59441";
+  btn.style.borderColor = "#C59765";
   if (status) status.textContent = "WiFi password copied to clipboard.";
   setTimeout(() => {
     btn.textContent = original;

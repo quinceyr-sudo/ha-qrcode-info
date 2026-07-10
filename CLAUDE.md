@@ -21,7 +21,7 @@ Hosted on: **Cloudflare Pages** (GitHub repo: quinceyr-sudo/ha-qrcode-info)
 
 | Token                    | Value       | Usage                        |
 |--------------------------|-------------|------------------------------|
-| `pure-gold`              | `#C59441`   | Accents, shimmer bar, icons  |
+| `pure-gold`              | `#C59765`   | Accents, shimmer bar, icons  |
 | `primary`                | `#7c572b`   | Buttons, headings, links     |
 | `primary-container`      | `#c59765`   | Button hover                 |
 | `deep-onyx`              | `#0F0802`   | Footer background            |
@@ -103,8 +103,8 @@ const ROOMS = {
   // ... 204–212 all Deluxe Twin except 211 (Deluxe Double)
   // Floor 3
   301: { floor: 3, type: "Deluxe Double" },
-  // ... 302–312 all Deluxe Twin except 311 (Deluxe Double)
-  // NOTE: Room 310 is an office — not a valid guest room
+  // ... 302–309 all Deluxe Twin, 311 Deluxe Double
+  // NOTE: Rooms 310 and 312 are the TDI corporate office — not valid guest rooms
 };
 ```
 
@@ -188,10 +188,12 @@ Still needed: CHC Hospital number, Taxi direct number.
 - Heading: bold uppercase brown text, left-aligned (no pill, no line — plain label)
 - **Visit Our Website** → https://hotelamericanosaipan.com (primary CTA, filled gold button)
 - **Leave a Google Review** → Google travel hotels review URL
-- **Get Directions** → Google Maps pin for Hotel Americano (from embed in hotelamericanosaipan.com)
-- **Majesty Restaurant** → https://majesty-restaurant.com (outlined button)
-- **TDI Saipan** → https://tdi-saipan.com (outlined button, tagged "· Coming Soon" — site not yet live)
-- **Residence Lodge** → https://residencelodge.com (outlined button, tagged "· Coming Soon" — site not yet live)
+- **Get Directions** → `google.com/maps/search/?api=1&query=...` pin for Hotel Americano (fixed
+  2026-07-11 — was a malformed embed `pb=` payload pasted onto a plain `/maps?` URL, which
+  landed on a generic map instead of the HA pin; now matches rl-qrcode-info's working pattern)
+- **Majesty Chinese Restaurant** → https://majesty-restaurant.com (outlined button)
+- **TDI Saipan** → https://tdi-saipan.com (outlined button, live — no tag)
+- **Residence Lodge** → https://residencelodge.com (outlined button, live — no tag)
 
 ### 8. Footer
 - Dark onyx background (`#0F0802`), gold top border
