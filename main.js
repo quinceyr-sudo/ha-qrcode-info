@@ -114,9 +114,143 @@ const MAJESTY_PHOTOS = [
   { src: "assets/majesty/img_3597.webp",    alt: "Majesty Restaurant" },
 ];
 
+// ─── I18N ─────────────────────────────────────────────────────────────────────
+
+const LANGS = [
+  { code: 'en',    label: 'English' },
+  { code: 'zh-CN', label: '简体中文' },
+  { code: 'zh-TW', label: '繁體中文' },
+  { code: 'ja',    label: '日本語' },
+  { code: 'ko',    label: '한국어' },
+];
+
+const LANG_FONTS = {
+  'zh-CN': 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&display=swap',
+  'zh-TW': 'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500&display=swap',
+  'ja':    'https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&display=swap',
+  'ko':    'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&display=swap',
+};
+
+let currentLang = 'en';
+let langSelectorListenersAttached = false;
+const loadedFonts = new Set();
+let activeRoom = null;
+
+function t(key, fallback) {
+  if (currentLang === 'en') return fallback;
+  const dict = I18N[currentLang];
+  if (dict && key in dict) return dict[key];
+  return fallback;
+}
+
+function resolveInitialLang() {
+  const stored = localStorage.getItem('haQrLang');
+  if (stored && I18N[stored]) return stored;
+  const nav = navigator.language || '';
+  if (/^zh-(TW|HK|MO)/i.test(nav)) return 'zh-TW';
+  if (/^zh/i.test(nav)) return 'zh-CN';
+  if (/^ja/i.test(nav)) return 'ja';
+  if (/^ko/i.test(nav)) return 'ko';
+  return 'en';
+}
+
+function loadFont(lang) {
+  const url = LANG_FONTS[lang];
+  if (!url || loadedFonts.has(lang)) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = url;
+  document.head.appendChild(link);
+  loadedFonts.add(lang);
+}
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('haQrLang', lang);
+  document.documentElement.lang = lang;
+  if (lang !== 'en') loadFont(lang);
+
+  document.title = t('page.title', 'Hotel Americano — Guest Information');
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (!el.dataset.i18nOrig) el.dataset.i18nOrig = el.textContent.trim();
+    el.textContent = t(key, el.dataset.i18nOrig);
+  });
+
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (!el.dataset.i18nOrig) el.dataset.i18nOrig = el.innerHTML.trim();
+    el.innerHTML = t(key, el.dataset.i18nOrig);
+  });
+
+  refreshRoomBanner();
+  renderRules();
+  renderNumbers();
+  renderLangSelector();
+}
+
+function renderLangSelector() {
+  const mount = document.getElementById('lang-selector');
+  if (!mount) return;
+
+  const curr = LANGS.find(l => l.code === currentLang) || LANGS[0];
+
+  mount.innerHTML = `
+    <div class="relative">
+      <button id="lang-toggle" aria-haspopup="listbox" aria-expanded="false"
+        class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-pure-gold/30 shadow-sm hover:bg-white transition-all">
+        <span class="material-symbols-outlined text-pure-gold" style="font-size:15px;line-height:1">language</span>
+        <span class="font-label-sm text-[10px] uppercase tracking-widest text-primary">${curr.label}</span>
+      </button>
+      <ul id="lang-menu" role="listbox" aria-label="Select language"
+        class="hidden absolute right-0 top-full mt-1.5 bg-white rounded-lg shadow-xl border border-outline-variant/30 overflow-hidden z-[70] min-w-[140px]">
+        ${LANGS.map(l => `
+          <li role="option" aria-selected="${l.code === currentLang}" data-lang="${l.code}"
+            class="px-4 py-2.5 cursor-pointer hover:bg-surface-container-low transition-colors font-label-sm text-[12px] tracking-wide ${l.code === currentLang ? 'text-primary font-bold' : 'text-charcoal-text'}">
+            ${l.label}
+          </li>
+        `).join('')}
+      </ul>
+    </div>
+  `;
+
+  const toggle = document.getElementById('lang-toggle');
+  const menu = document.getElementById('lang-menu');
+
+  toggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const isOpen = !menu.classList.contains('hidden');
+    menu.classList.toggle('hidden', isOpen);
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  menu.querySelectorAll('[data-lang]').forEach(item => {
+    item.addEventListener('click', () => applyLanguage(item.dataset.lang));
+  });
+
+  if (!langSelectorListenersAttached) {
+    document.addEventListener('click', () => {
+      document.getElementById('lang-menu')?.classList.add('hidden');
+      document.getElementById('lang-toggle')?.setAttribute('aria-expanded', 'false');
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.getElementById('lang-menu')?.classList.add('hidden');
+    });
+    langSelectorListenersAttached = true;
+  }
+}
+
+function initI18n() {
+  currentLang = resolveInitialLang();
+  renderLangSelector();
+  if (currentLang !== 'en') applyLanguage(currentLang);
+}
+
 // ─── INIT ────────────────────────────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {
+  initI18n();
   initRoomBanner();
   renderRules();
   renderNumbers();
@@ -146,16 +280,28 @@ function initRoomBanner() {
   const params = new URLSearchParams(window.location.search);
   const roomParam = params.get("room");
   if (!roomParam) return;
-
   const roomNum = parseInt(roomParam, 10);
   const room = ROOMS[roomNum];
   if (!room) return;
+  activeRoom = { num: roomNum, ...room };
+  refreshRoomBanner();
+}
 
+const ROOM_TYPE_KEYS = {
+  "Deluxe Twin":   "room.type.twin",
+  "Deluxe Double": "room.type.double",
+};
+
+function refreshRoomBanner() {
+  if (!activeRoom) return;
   const banner = document.getElementById("room-banner");
   const bannerText = document.getElementById("room-banner-text");
   if (!banner || !bannerText) return;
-
-  bannerText.textContent = `Room ${roomNum}  ·  ${room.type}  ·  Floor ${room.floor}`;
+  const typeKey = ROOM_TYPE_KEYS[activeRoom.type];
+  const type = typeKey ? t(typeKey, activeRoom.type) : activeRoom.type;
+  const roomLabel  = t("room.label",  "Room");
+  const floorLabel = t("room.floor",  "Floor");
+  bannerText.textContent = `${roomLabel} ${activeRoom.num}  ·  ${type}  ·  ${floorLabel} ${activeRoom.floor}`;
   banner.classList.remove("hidden");
 }
 
@@ -276,13 +422,15 @@ function initAutoScrollStrip(strip, interval = 3000) {
 function renderRules() {
   const list = document.querySelector(".rules-list");
   if (!list) return;
+  list.innerHTML = "";
   RULES.forEach((rule, i) => {
+    const text = t(`rule.${i}`, rule);
     const li = document.createElement("li");
     li.className = "flex items-start gap-3 stagger-item";
     li.style.setProperty("--i", i);
     li.innerHTML = `
       <span class="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" aria-hidden="true"></span>
-      <p class="font-body-md text-body-md leading-relaxed">${rule}</p>
+      <p class="font-body-md text-body-md leading-relaxed">${text}</p>
     `;
     list.appendChild(li);
   });
@@ -293,15 +441,19 @@ function renderRules() {
 function renderNumbers() {
   const container = document.getElementById("numbers-list");
   if (!container) return;
+  container.innerHTML = "";
 
   NUMBERS.forEach(({ label, display, tel, note, icon, tappable }, i) => {
+    const tLabel   = t(`num.${i}.label`,   label);
+    const tDisplay = t(`num.${i}.display`, display);
+    const tNote    = note ? t(`num.${i}.note`, note) : null;
     const el = document.createElement(tappable ? "a" : "div");
     el.className = "flex items-center justify-between p-4 bg-surface-container-low rounded-lg shadow-soft transition-colors group stagger-item" +
       (tappable ? " hover:bg-surface-container cursor-pointer" : " opacity-80");
     el.style.setProperty("--i", i);
     if (tappable) {
       el.href = `tel:${tel}`;
-      el.setAttribute("aria-label", `Call ${label}: ${display}`);
+      el.setAttribute("aria-label", `Call ${tLabel}: ${tDisplay}`);
     }
     el.setAttribute("role", "listitem");
 
@@ -309,9 +461,9 @@ function renderNumbers() {
       <div class="flex items-center gap-4">
         <span class="text-xl flex-shrink-0" aria-hidden="true">${icon}</span>
         <div>
-          <p class="font-label-sm text-label-sm text-charcoal-text tracking-wide uppercase">${label}</p>
-          <p class="font-body-md text-body-md text-on-surface-variant">${display}</p>
-          ${note ? `<p class="text-[11px] text-on-surface-variant/60 mt-0.5 tracking-wide">${note}</p>` : ""}
+          <p class="font-label-sm text-label-sm text-charcoal-text tracking-wide uppercase">${tLabel}</p>
+          <p class="font-body-md text-body-md text-on-surface-variant">${tDisplay}</p>
+          ${tNote ? `<p class="text-[11px] text-on-surface-variant/60 mt-0.5 tracking-wide">${tNote}</p>` : ""}
         </div>
       </div>
       ${tappable
@@ -353,14 +505,13 @@ function initWifiCopy() {
 }
 
 function showCopied(btn, status) {
-  const original = btn.textContent;
-  btn.textContent = "COPIED ✓";
+  btn.textContent = t("wifi.copied", "COPIED ✓");
   btn.style.backgroundColor = "#C59765";
   btn.style.color = "#ffffff";
   btn.style.borderColor = "#C59765";
   if (status) status.textContent = "WiFi password copied to clipboard.";
   setTimeout(() => {
-    btn.textContent = original;
+    btn.textContent = t("wifi.copy", "Copy Password");
     btn.style.backgroundColor = "";
     btn.style.color = "";
     btn.style.borderColor = "";
