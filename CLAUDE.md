@@ -40,6 +40,7 @@ Background: `#F7F3ED` (warm cream). Use the same visual language as hotelamerica
 ha-qrcode-info/
 ├── index.html
 ├── main.js
+├── i18n.js       ← non-English translations (zh-CN, zh-TW, ja, ko); English stays in HTML as fallback
 ├── style.css
 └── assets/
     ├── Hotel Americano LOGO 2.png           ← original full logo (unused in UI)
@@ -247,8 +248,19 @@ Still needed: CHC Hospital number, Taxi direct number.
 
 ---
 
+## i18n System
+- **Languages:** English (default), Simplified Chinese (zh-CN), Traditional Chinese (zh-TW), Japanese (ja), Korean (ko)
+- **Pattern:** `data-i18n` / `data-i18n-html` attributes on static HTML; `t(key, fallback)` calls inside JS-rendered sections (rules, numbers)
+- **English** stays in the HTML as the baseline fallback — not in `i18n.js`
+- **Lang selector:** globe icon pill, top-right corner (`#lang-selector`), floats above hero section
+- **Persistence:** `localStorage` key `haQrLang`; auto-detects `navigator.language` on first visit
+- **Fonts:** Noto Serif SC/TC, Shippori Mincho, Noto Serif KR loaded lazily per language switch
+- **49 keys per language** across namespaces: `page`, `hero`, `rules`, `rule.0–15`, `wifi`, `numbers`, `num.0–2`, `majesty`, `links`, `footer`, `nav`, `room`
+- To add a new language: add a block to `i18n.js` with all 49 keys, add a button entry in `renderLangSelector()` in `main.js`
+
+---
+
 ## Out of Scope (for now)
 - Live Beds24 data (no dynamic guest name/dates)
 - Admin panel for updating content
-- Multiple languages
 - CHC Hospital and Taxi direct numbers (pending)
