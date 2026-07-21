@@ -238,6 +238,13 @@ Still needed: CHC Hospital number, Taxi direct number.
 - CNAME in Cloudflare DNS pointing to Pages deployment
 - No environment variables needed (fully static)
 
+## SEO / Crawler Lockdown
+This is a private in-room utility page — it must never be indexed.
+- `robots.txt` at repo root: `Disallow: /` for all agents
+- Every HTML page has `<meta name="robots" content="noindex, nofollow">` in `<head>`
+- No sitemap.xml (never create one)
+- No Open Graph, Twitter card, or canonical tags (keep it that way)
+
 ---
 
 ## Git Notes
